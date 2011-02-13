@@ -35,7 +35,7 @@ module ActionView
         puts "overridden cache function"
         puts name
         if controller.perform_caching
-          if !fragment_exist?(name)
+          if !controller.fragment_exist?(name)
             fragment_for(name, options, &block)
           end
           safe_concat("<!--fragment #{name}-->")
