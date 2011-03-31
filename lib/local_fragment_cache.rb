@@ -38,7 +38,7 @@ module ActionView
         puts name
         
         if controller.perform_caching
-          digest = Digest::MD5.hexdigest(name)
+          digest = 'views/'+Digest::MD5.hexdigest(name)
           if !controller.fragment_exist?(digest)
             fragment_for(digest, options, &block)
           end
