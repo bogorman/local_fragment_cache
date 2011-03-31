@@ -1,3 +1,5 @@
+require 'digest/md5'
+
 module ActionView
   # = Action View Cache Helper
   module Helpers
@@ -34,11 +36,13 @@ module ActionView
       def cache(name = {}, options = nil, &block)
         puts "overridden cache function"
         puts name
+        
         if controller.perform_caching
-          if !controller.fragment_exist?(name)
-            fragment_for(name, options, &block)
+          digest = Digest::MD5.hexdigest(name)
+          if !controller.fragment_exist?(digest)
+            fragment_for(digest, options, &block)
           end
-          safe_concat("<!--fragment #{name}-->")
+          safe_concat("<!--fragment #{digest}-->")
         else
           yield
         end
